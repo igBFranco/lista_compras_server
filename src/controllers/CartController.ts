@@ -12,8 +12,8 @@ const connection = mysql.createConnection({
 });
 
 
-export const getProducts = (req: Request, res: Response, next: NextFunction) => {
-  const query = 'SELECT * FROM Produtos';
+export const getCart = (req: Request, res: Response, next: NextFunction) => {
+  const query = 'SELECT * FROM Carrinho';
   connection.query(query, (err, results) => {
     if (err) {
       return next(err);
@@ -22,9 +22,9 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
   });
 }
 
-export const getProducttById = (req: Request, res: Response, next: NextFunction) => { 
+export const getCartById = (req: Request, res: Response, next: NextFunction) => { 
   const { id } = req.params;
-  const query = 'SELECT * FROM Produtos WHERE id = ?';
+  const query = 'SELECT * FROM Carrinho WHERE id = ?';
   connection.query(query, [id], (err, results) => {
     if (err) {
       return next(err);
@@ -36,16 +36,16 @@ export const getProducttById = (req: Request, res: Response, next: NextFunction)
   });
 }
 
-export const createProduct = (req: Request, res: Response, next: NextFunction) => { 
-  const { Nome, Marca, Preco, Quantidade, Data_Validade, Descricao } = req.body; // Supondo que os campos são enviados no corpo da requisição
+export const createCart = (req: Request, res: Response, next: NextFunction) => { 
+  const { Valor_Total, Usuario_id, Status } = req.body; // Supondo que os campos são enviados no corpo da requisição
 
   // Validação dos campos
-  if (!Nome || !Marca || !Preco || !Quantidade ) {
+  if (!Valor_Total || !Usuario_id || !Status ) {
     return res.status(400).json({ error: 'Campos obrigatórios não informados' });
   }
 
-  const query = 'INSERT INTO Usuario (Nome, Marca, Preco, Quantidade, Data_Validade, Descricao) VALUES (?, ?, ?, ?, ?, ?)';
-  const values = [Nome, Marca, Preco, Quantidade, Data_Validade, Descricao];
+  const query = 'INSERT INTO Carrinho (Valor_Total, Usuario_id, Status) VALUES (?, ?, ?)';
+  const values = [Valor_Total, Usuario_id, Status];
   connection.query(query, values, (err, result) => {
     if (err) {
       return next(err);
@@ -54,17 +54,17 @@ export const createProduct = (req: Request, res: Response, next: NextFunction) =
   });
 }
 
-export const updateProduct = (req: Request, res: Response, next: NextFunction) => { 
+export const updateCart = (req: Request, res: Response, next: NextFunction) => { 
   const { id } = req.params;
-  const { Nome, Marca, Preco, Quantidade, Data_Validade, Descricao } = req.body; // Supondo que os campos são enviados no corpo da requisição
+  const { Valor_Total, Usuario_id, Status } = req.body; // Supondo que os campos são enviados no corpo da requisição
 
   // Validação dos campos
-  if (!Nome || !Marca || !Preco || !Quantidade )  {
+  if (!Valor_Total || !Usuario_id || !Status )  {
     return res.status(400).json({ error: 'Campos obrigatórios não informados' });
   }
 
-  const query = 'UPDATE Produtos SET Nome = ?, Marca = ?, Preco = ?, Quantidade = ?, Data_Validade = ?, Descricao = ? WHERE id = ?';
-  const values = [Nome, Marca, Preco, Quantidade, Data_Validade, Descricao, id];
+  const query = 'UPDATE Carrinho SET Valor_Total = ?, Usuario_id = ?, Status = ? WHERE id = ?';
+  const values = [Valor_Total, Usuario_id, Status, id];
   connection.query(query, values, (err) => {
     if (err) {
       return next(err);
@@ -73,10 +73,10 @@ export const updateProduct = (req: Request, res: Response, next: NextFunction) =
   });
 }
 
-export const deleteProduct = (req: Request, res: Response, next: NextFunction) => { 
+export const deleteCart = (req: Request, res: Response, next: NextFunction) => { 
   const { id } = req.params;
 
-  const query = 'DELETE FROM Produtos WHERE id = ?';
+  const query = 'DELETE FROM Carrinho WHERE id = ?';
   connection.query(query, [id], (err) => {
     if (err) {
       return next(err);
