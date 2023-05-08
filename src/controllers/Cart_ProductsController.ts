@@ -64,7 +64,7 @@ export const updateCartProduct = (req: Request, res: Response, next: NextFunctio
   }
 
   const query = 'UPDATE Carrinho_Produto SET Carrinho_id = ?, Produto_id = ?, Qntd = ?, Dta_Integracao, ValorTotal = ?, Valor_Unitario = ?, id = ?';
-  const values = [Carrinho_id, Produto_id, Qntd, Dta_Integracao, ValorTotal, Valor_Unitario];
+  const values = [Carrinho_id, Produto_id, Qntd, Dta_Integracao, ValorTotal, Valor_Unitario, id];
   connection.query(query, values, (err) => {
     if (err) {
       return next(err);
