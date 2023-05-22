@@ -4,9 +4,12 @@ const PORT = process.env.PORT || 3001;
 import * as dotenv from 'dotenv'
 const app: Application = express();
 import router from './src/Routes';
+import cors from 'cors';
 
 // Middleware para parsear o corpo das requisições em JSON
 app.use(express.json());
+
+app.use(cors());
 
 // Configuração do banco de dados MySQL
 const connection = mysql.createConnection({
