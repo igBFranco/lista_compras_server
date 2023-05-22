@@ -44,7 +44,7 @@ export const createProduct = (req: Request, res: Response, next: NextFunction) =
     return res.status(400).json({ error: 'Campos obrigatórios não informados' });
   }
 
-  const query = 'INSERT INTO Usuario (Nome, Marca, Preco, Quantidade, Data_Validade, Descricao) VALUES (?, ?, ?, ?, ?, ?)';
+  const query = 'INSERT INTO Produtos (Nome, Marca, Preco, Quantidade, Data_Validade, Descricao) VALUES (?, ?, ?, ?, ?, ?)';
   const values = [Nome, Marca, Preco, Quantidade, Data_Validade, Descricao];
   connection.query(query, values, (err, result) => {
     if (err) {
